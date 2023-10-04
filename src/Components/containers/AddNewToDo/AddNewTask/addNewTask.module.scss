@@ -1,0 +1,15 @@
+@import "/src/constants/variables.scss";
+
+.addNewTaskBlockButton {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  div {
+    padding: 7px;
+    border-radius: 20px;
+    border: 2px solid $black;
+    box-shadow: 2px 2px 2px 1px $firstShadow;
+    background: $lightColor;
+  }
+}

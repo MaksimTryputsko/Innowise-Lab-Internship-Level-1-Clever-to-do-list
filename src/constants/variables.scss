@@ -1,0 +1,27 @@
+$black: var(--black-color);
+$white: var(--light-color);
+$lightColor: (--light-color);
+$firstShadow: var(--firstShadow-color);
+$secondeShadow: var(--secondeShadow-color);
+$lightGrey: var(--days-from-calendar-color);
+$hoverDelete: var(--hover-delete);
+$bodyColor: var(--bg-color);
+
+:root[data-theme="light"] {
+  --bg-color: #add8e6;
+  --days-from-calendar-color: #adc4ce;
+  --firstShadow-color: rgba(0, 0, 0, 0.3);
+  --secondeShadow-color: rgba(0, 0, 0, 0.22);
+  --light-color: whitesmoke;
+  --hover-delete: rgb(129, 44, 44);
+  --black-color: #000;
+}
+:root[data-theme="dark"] {
+  --bg-color: #00334a;
+  --days-from-calendar-color: #111517;
+  --firstShadow-color: rgba(219, 219, 219, 0.3);
+  --secondeShadow-color: rgba(155, 111, 111, 0.22);
+  --light-color: #00f2ff;
+  --hover-delete: rgb(255, 0, 0);
+  --black-color: #453d00;
+}
