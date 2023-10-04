@@ -15,7 +15,7 @@ function App() {
   }
   return (
     <Routes>
-      <Route element={<HomePage />} path={HOME_PAGE}></Route>
+      e<Route element={<HomePage />} path={HOME_PAGE}></Route>
       <Route element={<HomePage />} path="/:pageId"></Route>
       <Route element={<RegisterPage />} path={REGISTER_PAGE}></Route>
       <Route element={<LoginPage />} path={LOGIN_PAGE}></Route>

@@ -9,6 +9,7 @@ interface IPropsModal {
 }
 
 const modalRootElement = document.querySelector("#modalForAddNewTask");
+
 const Modal = ({ children, open, onClose }: IPropsModal) => {
   const element = useMemo(() => document.createElement("div"), []);
   useEffect(() => {

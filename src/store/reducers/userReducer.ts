@@ -37,7 +37,6 @@ export const userReducer = (state = initialState, action: IAction) => {
       return {
         ...state,
         email: null,
-        token: null,
         id: null,
       };
     default:
