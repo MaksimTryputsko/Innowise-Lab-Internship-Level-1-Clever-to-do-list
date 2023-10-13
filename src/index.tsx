@@ -1,13 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.module.scss";
-import App from "./App";
+import { App } from "./App";
 import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "providers/ThemeProvider";
 import { Provider } from "react-redux";
 import { store } from "store";
 import "./firebase";
 import "firebase/firestore";
 import "firebase/auth";
+import { Toaster } from "react-hot-toast";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -15,8 +17,19 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <BrowserRouter>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ThemeProvider>
+      <Provider store={store}>
+        <App />
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            style: {
+              border: "5px solid #713200",
+              fontSize: "25px",
+            },
+          }}
+        />
+      </Provider>
+    </ThemeProvider>
   </BrowserRouter>,
 );

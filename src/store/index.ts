@@ -3,8 +3,8 @@ import {
   combineReducers,
   applyMiddleware,
 } from "redux";
-import { userReducer } from "./reducers/userReducer";
-import { toDosListReducer } from "./reducers/toDosListReducer";
+import { userReducer } from "./reducers/userReducer/userReducer";
+import { toDosListReducer } from "./reducers/toDoListReducer/toDosListReducer";
 import createSagaMiddleware from "redux-saga";
 import { rootWatcher } from "./saga";
 
@@ -17,3 +17,5 @@ const rootReducer = combineReducers({
 
 export const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(rootWatcher);
+
+export type RootState = ReturnType<typeof store.getState>;

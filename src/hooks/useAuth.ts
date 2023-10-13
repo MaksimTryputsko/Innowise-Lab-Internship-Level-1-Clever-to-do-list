@@ -1,11 +1,6 @@
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { IInitialState } from "store/reducers/userReducer";
+import { useAppSelector } from "./useAppSelector";
 
-interface IState {
-  user: IInitialState;
-}
-
-export const useAuthor = () => {
-  const { email, id } = useSelector((state: IState) => state.user);
-  return { isAuth: !!email, email, id };
+export const useAuth = () => {
+  const { email, id } = useAppSelector(state => state.user);
+  return { isAuth: Boolean(email), email, id };
 };

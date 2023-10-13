@@ -1,10 +1,6 @@
-import { useSelector } from "react-redux";
-import { IInitialState } from "store/reducers/toDosListReducer";
+import { useAppSelector } from "./useAppSelector";
 
-interface IState {
-  toDos: IInitialState;
-}
 export const useToDosList = () => {
-  const { toDos, toDosForMonth } = useSelector((state: IState) => state.toDos);
+  const { toDos, toDosForMonth } = useAppSelector(state => state.toDos);
   return { toDos, toDosForMonth };
 };

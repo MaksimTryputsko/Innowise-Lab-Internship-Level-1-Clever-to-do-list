@@ -1,4 +1,4 @@
-import { ITask } from "store/reducers/toDosListReducer";
+import { ITask } from "store/reducers/toDoListReducer/actions";
 
 export const shouldUpdateTask = (
   arr: Record<string, ITask & string>[],
@@ -7,14 +7,12 @@ export const shouldUpdateTask = (
 ) => {
   const findDay = arr.find(el => el.id === day);
   if (findDay) {
-    const findToDo = Object.entries(findDay);
-    const findToDoFilter = findToDo
-      .map(el => el[1])
-      .filter(el => el.task !== undefined);
-    const elToDo = findToDoFilter.find(el => el.task === task);
-    if (elToDo) {
-      return { findId: elToDo.id, update: true };
+    const findToDo = Object.values(findDay)
+      .filter(element => Boolean(element.task))
+      .find(element => element.task === task);
+    if (findToDo) {
+      return { findId: findToDo.id, update: true };
     }
   }
-  return { findId: "", update: false };
+  return { findId: null, update: false };
 };

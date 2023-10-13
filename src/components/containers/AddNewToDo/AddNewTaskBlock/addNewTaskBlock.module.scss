@@ -1,0 +1,19 @@
+@import "/src/constants/variables.scss";
+
+.newTaskBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.descriptionBlock {
+  display: flex;
+  gap: 5px;
+}
+
+.taskBlock {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}

@@ -10,11 +10,11 @@ import {
 import { takeEvery, all } from "redux-saga/effects";
 import { registrationSaga } from "./entranceSaga/registrationSaga";
 import { loginSaga } from "./entranceSaga/loginSaga";
-import { getToDosSaga } from "./toDosSaga/getToDoSaga";
-import { setToDoSaga } from "./toDosSaga/setTodoSaga";
-import { getToDosSagaForMonths } from "./toDosSaga/getToDosSagaForMonths";
-import { removeToDoSaga } from "./toDosSaga/removeToDoSaga";
-import { changeCompletedSaga } from "./toDosSaga/changeCompletedSaga";
+import { getToDosFromServer } from "./toDosSaga/getToDoFromServer";
+import { saveTask } from "./toDosSaga/saveTask";
+import { getToDosSagaFromServerMonths } from "./toDosSaga/getToDosFromServerForMonths";
+import { removeTask } from "./toDosSaga/removeTask";
+import { changeStatus } from "./toDosSaga/changeStatus";
 
 function* userWatcher() {
   yield takeEvery(SAGA_REGISTRATION_USER, registrationSaga);
@@ -22,11 +22,11 @@ function* userWatcher() {
 }
 
 function* toDosWatcher() {
-  yield takeEvery(SAGA_GET_TODO, getToDosSaga);
-  yield takeEvery(SAGA_SET_TODO, setToDoSaga);
-  yield takeEvery(SAGA_GET_TODOS_FOR_MONTHS, getToDosSagaForMonths);
-  yield takeEvery(REMOVE_SAGA_TODOS, removeToDoSaga);
-  yield takeEvery(SAGA_CHANGE_COMPLETED, changeCompletedSaga);
+  yield takeEvery(SAGA_GET_TODO, getToDosFromServer);
+  yield takeEvery(SAGA_SET_TODO, saveTask);
+  yield takeEvery(SAGA_GET_TODOS_FOR_MONTHS, getToDosSagaFromServerMonths);
+  yield takeEvery(REMOVE_SAGA_TODOS, removeTask);
+  yield takeEvery(SAGA_CHANGE_COMPLETED, changeStatus);
 }
 export function* rootWatcher() {
   yield all([userWatcher(), toDosWatcher()]);

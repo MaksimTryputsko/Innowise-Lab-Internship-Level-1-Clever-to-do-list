@@ -1,6 +1,6 @@
-import { ITask } from "store/reducers/toDosListReducer";
+import { ITask } from "store/reducers/toDoListReducer/actions";
 
-export interface IArrayDays {
+export interface IDays {
   year: number;
   month: number;
   number: number;
@@ -14,13 +14,12 @@ interface IOldItem {
 }
 
 export const convertArrayWithCompletedTask = (
-  defaultArray: Record<string, ITask & string>[],
-  arraysDaysWithShortDays: IArrayDays[],
+  defaultArray: Record<string, ITask>[],
+  arraysDaysWithShortDays: IDays[],
 ) => {
   const daysArrayWithToDos = defaultArray.map(el => {
     return { number: el.id, completedTasks: null, outstandingTasks: null };
   });
-
   const setAllElementsToArray = defaultArray.map(el =>
     Object.entries(el).map(el2 => {
       return el2[1];
@@ -67,7 +66,5 @@ export const convertArrayWithCompletedTask = (
     }
     return acc;
   }, []);
-  return result.sort((a: IArrayDays, b: IArrayDays) =>
-    a.number > b.number ? 1 : -1,
-  );
+  return result.sort((a: IDays, b: IDays) => (a.number > b.number ? 1 : -1));
 };

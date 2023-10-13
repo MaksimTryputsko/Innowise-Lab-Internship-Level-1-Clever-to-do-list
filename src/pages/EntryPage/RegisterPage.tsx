@@ -2,7 +2,8 @@ import { LOGIN_PAGE } from "constants/routes";
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./login.module.scss";
-import { SignUp } from "Components/containers/EntryComponents/SignUp";
+import { SignUp } from "components/containers/EntryComponents/SignUp";
+import { Button } from "components/shared/Button/Button";
 
 const RegisterPage = React.memo(() => {
   return (
@@ -14,7 +15,7 @@ const RegisterPage = React.memo(() => {
       <div className={styles.blockChangePage}>
         <span>Already have account ?</span>
         <Link to={LOGIN_PAGE}>
-          <button>Sign in</button>
+          <Button variant="contained">Sign in</Button>
         </Link>
       </div>
     </div>
