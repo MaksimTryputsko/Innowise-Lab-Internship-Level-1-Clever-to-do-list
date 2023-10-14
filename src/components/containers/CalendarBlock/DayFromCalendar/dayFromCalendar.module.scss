@@ -16,6 +16,12 @@
     font-size: 2rem;
   }
 }
+.wrapperForValuesTasks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .wrapperForDay:hover {
   cursor: pointer;
   opacity: 0.5;

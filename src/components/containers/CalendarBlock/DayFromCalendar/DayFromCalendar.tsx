@@ -24,6 +24,10 @@ const DayFromCalendar = ({
 
   return (
     <div>
+      <div className={styles.wrapperForValuesTasks}>
+        <span> completed {completedTasks ? completedTasks : 0}</span>
+        <span> outstanding {outstandingTasks ? outstandingTasks : 0}</span>
+      </div>
       <div className={styles.wrapperForDay}>
         <div>{dayName}</div>
         <div>{dayNumber}</div>
