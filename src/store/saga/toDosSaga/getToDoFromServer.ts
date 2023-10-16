@@ -13,8 +13,10 @@ export function* getToDosFromServer(action: IActionGetToDosSaga): unknown {
   const getToDosList = yield call(async () => {
     return await toDosService.getDocument(userId, day);
   });
-  if (!getToDosList.data()) {
+
+  if (!getToDosList) {
     return yield put(getTodo([]));
   }
-  yield put(getTodo(Object.values(getToDosList.data())));
+
+  yield put(getTodo(Object.values(getToDosList)));
 }

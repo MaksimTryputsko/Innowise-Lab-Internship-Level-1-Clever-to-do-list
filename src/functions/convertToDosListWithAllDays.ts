@@ -1,4 +1,3 @@
-// import { IDays } from "components/containers/CalendarBlock/Calendar/Calendar";
 import { ITask } from "store/reducers/toDoListReducer/actions";
 
 export interface IDays {

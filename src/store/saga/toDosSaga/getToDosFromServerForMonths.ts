@@ -1,5 +1,4 @@
 import { call, put } from "redux-saga/effects";
-import { convertDataToArray } from "functions/convertDataToArray";
 import { getToDosForMonths } from "store/reducers/toDoListReducer/actions";
 import { toDosService } from "services/toDosSevice";
 
@@ -14,9 +13,10 @@ export function* getToDosSagaFromServerMonths(
   const getToDosList = yield call(async () => {
     return toDosService.getDocuments(action.payload);
   });
+  
   if (!getToDosList) {
     return;
   }
-  const toDosList = convertDataToArray(getToDosList);
-  yield put(getToDosForMonths(toDosList));
+
+  yield put(getToDosForMonths(getToDosList));
 }

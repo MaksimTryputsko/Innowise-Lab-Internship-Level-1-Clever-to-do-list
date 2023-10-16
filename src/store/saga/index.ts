@@ -28,6 +28,7 @@ function* toDosWatcher() {
   yield takeEvery(REMOVE_SAGA_TODOS, removeTask);
   yield takeEvery(SAGA_CHANGE_COMPLETED, changeStatus);
 }
+
 export function* rootWatcher() {
   yield all([userWatcher(), toDosWatcher()]);
 }

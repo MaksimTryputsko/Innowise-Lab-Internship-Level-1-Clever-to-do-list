@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styles from "./addNewTaskBlock.module.scss";
 import { useAuth } from "hooks/useAuth";
 import { useDispatch } from "react-redux";
@@ -32,6 +32,12 @@ const AddNewTaskBlock = ({ onClose }: IPropsAddNewTaskBlock) => {
     [],
   );
 
+  useEffect(() => {
+    return () => {
+      dispatch(getToDosListSagaForMonths(id));
+    };
+  });
+
   const buttonText = useMemo(() => {
     if (shouldUpdateTask(toDosForMonth, date, task).update) {
       return "UPDATE TASK";
@@ -61,7 +67,6 @@ const AddNewTaskBlock = ({ onClose }: IPropsAddNewTaskBlock) => {
         shouldUpdate,
       }),
     );
-    dispatch(getToDosListSagaForMonths(id));
     onClose();
   };
 

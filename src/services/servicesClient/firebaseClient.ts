@@ -41,11 +41,16 @@ export const FirebaseClient: IFirebaseClient = {
   },
   async getDocuments(userId: string) {
     const collectionRef = collection(dataBase, userId);
-    return await getDocs(collectionRef);
+    const data = await getDocs(collectionRef);
+    return data.docs.map(doc => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
   },
   async getDocument(userId: string, day: string) {
     const collectionRef = doc(dataBase, userId, day);
-    return await getDoc(collectionRef);
+    const data = await getDoc(collectionRef);
+    return data.data();
   },
   async removeTask(userId: string, numberDay: string, id: string) {
     const todoCollectionRef = doc(dataBase, userId, numberDay);
