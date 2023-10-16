@@ -8,6 +8,7 @@ import {
   collection,
   deleteField,
   doc,
+  getDoc,
   getDocs,
   setDoc,
   updateDoc,
@@ -17,7 +18,8 @@ import { ITask } from "store/reducers/toDoListReducer/actions";
 export interface IFirebaseClient {
   registrationUser(email: string, password: string): Promise<unknown>;
   loginUser(email: string, password: string): Promise<unknown>;
-  getDocument(userId: string): Promise<unknown>;
+  getDocuments(userId: string): Promise<unknown>;
+  getDocument(userId: string, day: string): Promise<unknown>;
   removeTask(userId: string, numberDay: string, id: string): void;
   changeStatus(id: string, pageId: string, taskId: string, task: ITask): void;
   saveTask(
@@ -37,9 +39,13 @@ export const FirebaseClient: IFirebaseClient = {
     const auth = getAuth();
     return await signInWithEmailAndPassword(auth, email, password);
   },
-  async getDocument(userId: string) {
+  async getDocuments(userId: string) {
     const collectionRef = collection(dataBase, userId);
     return await getDocs(collectionRef);
+  },
+  async getDocument(userId: string, day: string) {
+    const collectionRef = doc(dataBase, userId, day);
+    return await getDoc(collectionRef);
   },
   async removeTask(userId: string, numberDay: string, id: string) {
     const todoCollectionRef = doc(dataBase, userId, numberDay);

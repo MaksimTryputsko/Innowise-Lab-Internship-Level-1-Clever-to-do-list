@@ -13,12 +13,12 @@ interface IActionSaveTask {
 }
 
 export function* saveTask(action: IActionSaveTask): unknown {
-  const { date, userId, taskForServer, shouldUpdate, pageId } = action.payload;
+  const { userId, taskForServer, shouldUpdate, pageId, date } = action.payload;
   const { findId, update } = shouldUpdate;
 
   const id = update ? findId : taskForServer.id;
-
   toDosService.saveDocument(date, userId, `${id}`, taskForServer);
+
   if (pageId === date) {
     return yield put(
       update ? updateToDoDescription(taskForServer) : setTodo(taskForServer),

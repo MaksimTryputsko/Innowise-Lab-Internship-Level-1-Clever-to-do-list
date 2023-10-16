@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { DayFromCalendar } from "components/containers/CalendarBlock/DayFromCalendar/DayFromCalendar";
 import { arrayDaysFromToDay } from "functions/getDays";
 import styles from "./calendar.module.scss";
@@ -7,15 +7,13 @@ import { useDispatch } from "react-redux";
 import { useAuth } from "hooks/useAuth";
 import { getToDosListSagaForMonths } from "store/reducers/toDoListReducer/actions";
 import { useToDosList } from "hooks/useToDosList";
-import { convertArrayWithCompletedTask } from "functions/convertArrayWithCompletedTask";
+import { convertToDosListWithAllDays } from "functions/convertToDosListWithAllDays";
 
-interface IToDo {
-  day: string;
+export interface IDays {
+  year: number;
   month: number;
   number: number;
-  year: number;
-  completedTasks?: number;
-  outstandingTasks?: number;
+  day: string;
 }
 
 const Calendar = () => {
@@ -37,21 +35,19 @@ const Calendar = () => {
     }
   }, [pageId]);
 
-  const daysWithToDos = convertArrayWithCompletedTask(
+  const toDosList = convertToDosListWithAllDays(
     toDosForMonth,
     arraysDaysWithShortDays,
   );
-
   return (
     <div className={styles.blockCalendar}>
-      {daysWithToDos.map((day: IToDo) => {
+      {toDosList.map(day => {
         return (
-          <Link key={Math.random()} to={`/${day.number}`}>
+          <Link key={Math.random()} to={`/${day[0].number}`}>
             <DayFromCalendar
-              dayNumber={day.number}
-              dayName={day.day}
-              completedTasks={day.completedTasks}
-              outstandingTasks={day.outstandingTasks}
+              dayNumber={day[0].number}
+              dayName={day[0].day}
+              tasksStatus={day[1]}
             />
           </Link>
         );

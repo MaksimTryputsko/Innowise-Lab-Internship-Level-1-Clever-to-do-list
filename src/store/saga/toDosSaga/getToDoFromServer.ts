@@ -1,10 +1,5 @@
 import { put, call } from "redux-saga/effects";
 import { ISagaGetTodo, getTodo } from "store/reducers/toDoListReducer/actions";
-
-import {
-  convertDataToArray,
-  convertDataToArrayForDay,
-} from "functions/convertDataToArray";
 import { toDosService } from "services/toDosSevice";
 
 interface IActionGetToDosSaga {
@@ -13,14 +8,13 @@ interface IActionGetToDosSaga {
 }
 
 export function* getToDosFromServer(action: IActionGetToDosSaga): unknown {
-  const { userId, pageId } = action.payload;
+  const { userId, day } = action.payload;
+
   const getToDosList = yield call(async () => {
-    return toDosService.getDocuments(userId);
+    return await toDosService.getDocument(userId, day);
   });
-  if (!getToDosList) {
-    return;
+  if (!getToDosList.data()) {
+    return yield put(getTodo([]));
   }
-  const data = convertDataToArray(getToDosList);
-  const toDoListForDay = convertDataToArrayForDay(data, pageId);
-  yield put(getTodo(toDoListForDay));
+  yield put(getTodo(Object.values(getToDosList.data())));
 }

@@ -10,10 +10,17 @@ class ToDosService {
   constructor(httpClient: IFirebaseClient) {
     this.httpClient = httpClient;
   }
-
   async getDocuments(userId: string) {
     try {
-      const response = await this.httpClient.getDocument(userId);
+      const response = await this.httpClient.getDocuments(userId);
+      return response;
+    } catch (err) {
+      toast.error("Sorry we have problem with server!");
+    }
+  }
+  async getDocument(userId: string, day: string) {
+    try {
+      const response = await this.httpClient.getDocument(userId, day);
       return response;
     } catch (err) {
       toast.error("Sorry we have problem with server!");

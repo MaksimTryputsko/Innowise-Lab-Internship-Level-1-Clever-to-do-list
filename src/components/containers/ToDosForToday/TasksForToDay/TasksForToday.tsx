@@ -36,10 +36,12 @@ const TasksForToday = () => {
   }, [pageId]);
 
   useEffect(() => {
-    if (pageId) {
-      dispatch(sagaGetToDo({ userId: `${id}`, pageId: pageId }));
+    if (!pageId) {
+      return;
     }
+    dispatch(sagaGetToDo({ userId: `${id}`, day: pageId }));
   }, [pageId]);
+
   return (
     <div className={styles.blockTasksForToday}>
       {dateHeader}

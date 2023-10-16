@@ -50,6 +50,7 @@ const AddNewTaskBlock = ({ onClose }: IPropsAddNewTaskBlock) => {
       description,
       completed: false,
       id: generateId,
+      date,
     };
     dispatch(
       sagaSetToDo({

@@ -13,6 +13,7 @@ import {
 
 export interface ITask {
   task: string;
+  date: string;
   id: string;
   completed: boolean;
   description: string;
@@ -20,7 +21,7 @@ export interface ITask {
 
 export interface ISagaGetTodo {
   userId: string;
-  pageId: string;
+  day: string;
 }
 
 interface IShouldUpdate {
@@ -63,7 +64,7 @@ export const setTodo = (payload: ITask) => ({
   payload,
 });
 
-export const getTodo = (payload: ITask[]) => ({
+export const getTodo = (payload: ITask[] | null) => ({
   type: GET_TODO,
   payload,
 });

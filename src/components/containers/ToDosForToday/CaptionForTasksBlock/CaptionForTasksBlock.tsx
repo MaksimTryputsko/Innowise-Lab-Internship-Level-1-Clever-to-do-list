@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./captionForTasksBlock.module.scss";
-import { IDays } from "functions/convertArrayWithCompletedTask";
+import { IDays } from "functions/convertToDosListWithAllDays";
 
 interface IPropsCaptionForTasksBlock {
   email: string;

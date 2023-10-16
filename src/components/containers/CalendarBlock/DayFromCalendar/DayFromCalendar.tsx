@@ -1,40 +1,35 @@
 import React from "react";
 import styles from "./dayFromCalendar.module.scss";
-import classNames from "classnames";
+import { ITask } from "store/reducers/toDoListReducer/actions";
 
 interface IPropsDayFromCalendar {
   dayNumber: number;
   dayName: string;
-  completedTasks?: number;
-  outstandingTasks?: number;
+  tasksStatus?: ITask[];
 }
 
 const DayFromCalendar = ({
   dayNumber,
   dayName,
-  completedTasks,
-  outstandingTasks,
+  tasksStatus,
 }: IPropsDayFromCalendar) => {
-  const classCompleted = classNames(styles.default, {
-    [styles.completedTasksBlock]: Boolean(completedTasks),
-  });
-  const classOutstanding = classNames(styles.default, {
-    [styles.outstandingTasksBlock]: Boolean(outstandingTasks),
-  });
-
   return (
-    <div>
-      <div className={styles.wrapperForValuesTasks}>
-        <span> completed {completedTasks ? completedTasks : 0}</span>
-        <span> outstanding {outstandingTasks ? outstandingTasks : 0}</span>
+    <div className={styles.blockDayCalendar}>
+      <div className={styles.completedTasks}>
+        {tasksStatus &&
+          tasksStatus.map(el => {
+            return el.completed ? <span key={el.id}></span> : null;
+          })}
       </div>
       <div className={styles.wrapperForDay}>
         <div>{dayName}</div>
         <div>{dayNumber}</div>
       </div>
-      <div className={styles.completedWrapper}>
-        <div className={classCompleted}></div>
-        <div className={classOutstanding}></div>
+      <div className={styles.unfulfilledTasks}>
+        {tasksStatus &&
+          tasksStatus.map(el => {
+            return el.completed ? null : <span key={el.id}></span>;
+          })}
       </div>
     </div>
   );

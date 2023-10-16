@@ -8,6 +8,7 @@ import { DescriptionTask } from "components/containers/DecriptionTask/Descriptio
 import { useAuth } from "hooks/useAuth";
 import { useDispatch } from "react-redux";
 import {
+  getToDosListSagaForMonths,
   removeSagaToDos,
   sagaChangeCompleted,
 } from "store/reducers/toDoListReducer/actions";
@@ -34,9 +35,11 @@ const ToDoElement = ({
 
   const dispatch = useDispatch();
   const handleRemoveClick = () => {
-    if (pageId && id) {
-      dispatch(removeSagaToDos({ userId: id, id: taskId, numberDay: pageId }));
+    if (!pageId || !id) {
+      return;
     }
+    dispatch(removeSagaToDos({ userId: id, id: taskId, numberDay: pageId }));
+    dispatch(getToDosListSagaForMonths(id));
   };
 
   const handleClickChangeCompleted = () => {
@@ -49,6 +52,7 @@ const ToDoElement = ({
       description,
       taskId,
       id: taskId,
+      date: pageId,
     };
     dispatch(sagaChangeCompleted({ id, pageId, taskId, task: toDo }));
     setChecked(!isChecked);
