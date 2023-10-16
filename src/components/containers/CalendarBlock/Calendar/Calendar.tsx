@@ -39,7 +39,6 @@ const Calendar = () => {
     toDosForMonth,
     arraysDaysWithShortDays,
   );
-  console.log(toDosList);
   return (
     <div className={styles.blockCalendar}>
       {toDosList.map(day => {
