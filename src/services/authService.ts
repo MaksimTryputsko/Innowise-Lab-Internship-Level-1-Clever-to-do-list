@@ -2,17 +2,24 @@ import { errorProcessingLogin } from "functions/errorProcessing/errorProcessingL
 import { errorProcessingRegistration } from "functions/errorProcessing/errorProcessingRegistration";
 
 import {
+  UserCredential,
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
 interface IAuthService {
-  registrationUser(email: string, password: string): Promise<unknown>;
-  loginUser(email: string, password: string): Promise<unknown>;
+  registrationUser(
+    email: string,
+    password: string,
+  ): Promise<UserCredential | undefined>;
+  loginUser(
+    email: string,
+    password: string,
+  ): Promise<UserCredential | undefined>;
 }
 
-class AuthService implements IAuthService {
+class FirebaseAuthService implements IAuthService {
   async registrationUser(email: string, password: string) {
     try {
       const auth = getAuth();
@@ -32,4 +39,4 @@ class AuthService implements IAuthService {
   }
 }
 
-export const authService = new AuthService();
+export const authService = new FirebaseAuthService();

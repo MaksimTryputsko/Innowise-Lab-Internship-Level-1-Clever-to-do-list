@@ -6,7 +6,7 @@ import {
   setTodo,
   updateToDoDescription,
 } from "store/reducers/toDoListReducer/actions";
-import { toDosService } from "services/FirebaseTodosService";
+import { todosService } from "services/TodosService";
 
 interface IActionSaveTask {
   type: string;
@@ -18,7 +18,7 @@ export function* saveTask(action: IActionSaveTask): unknown {
   const { findId, update } = shouldUpdate;
 
   const id = update ? findId : taskForServer.id;
-  yield toDosService.saveTask(date, userId, `${id}`, taskForServer);
+  yield todosService.saveTask(date, userId, `${id}`, taskForServer);
   yield put(getToDosListSagaForMonths(userId));
 
   if (pageId === date) {
