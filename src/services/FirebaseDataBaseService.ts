@@ -13,7 +13,7 @@ import { dataBase } from "../firebase";
 import { ITask } from "store/reducers/toDoListReducer/actions";
 
 export interface IDataBaseService {
-  getDocuments(collectionId: string): Promise<DocumentData | undefined>;
+  getDocuments(collectionId: string): Promise<{ id: string }[]>;
   getDocument(
     collectionId: string,
     documentId: string,
@@ -47,7 +47,8 @@ export default class FirebaseDataBaseService implements IDataBaseService {
   async getDocument(collectionId: string, documentId: string) {
     const collectionRef = doc(dataBase, collectionId, documentId);
     const data = await getDoc(collectionRef);
-    return data.data();
+    const result = data.data();
+    return result;
   }
   async removeDocument(
     collectionId: string,

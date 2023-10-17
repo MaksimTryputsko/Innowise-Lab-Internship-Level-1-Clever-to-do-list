@@ -14,7 +14,6 @@ const Header = () => {
   const handleClickRemoveUser = () => {
     dispatch(removeUser());
   };
-
   const { changeTheme } = useContext(ThemeContext) as IThemeContext;
 
   return (

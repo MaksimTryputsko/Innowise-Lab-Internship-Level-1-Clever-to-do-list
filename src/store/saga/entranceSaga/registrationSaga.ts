@@ -11,9 +11,6 @@ export function* registrationSaga(action: IActionEntrySaga): unknown {
   if (!userFromServer) {
     return;
   }
-  const user = {
-    email: userFromServer.user.email,
-    id: userFromServer.user.uid,
-  };
-  yield put(setUser(user));
+
+  yield put(setUser(userFromServer));
 }

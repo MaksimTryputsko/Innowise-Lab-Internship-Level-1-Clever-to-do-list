@@ -4,14 +4,10 @@ import toast from "react-hot-toast";
 import FirebaseDataBaseService, {
   IDataBaseService,
 } from "./FirebaseDataBaseService";
-import { DocumentData } from "firebase/firestore";
 
 interface ITodosService {
-  getTasksForMonths(userId: string): Promise<DocumentData | undefined>;
-  getTasksForDay(
-    userId: string,
-    day: string,
-  ): Promise<DocumentData | undefined>;
+  getTasksForMonths(userId: string): Promise<{ id: string }[] | undefined>;
+  getTasksForDay(userId: string, day: string): Promise<ITask[] | undefined>;
   removeTask(userId: string, numberDay: string, id: string): void;
   changeTaskStatus(
     id: string,
@@ -32,7 +28,6 @@ class TodosService implements ITodosService {
   constructor(dataBaseService: IDataBaseService) {
     this.dataBaseService = dataBaseService;
   }
-
   async getTasksForMonths(userId: string) {
     try {
       return await this.dataBaseService.getDocuments(userId);
@@ -42,7 +37,11 @@ class TodosService implements ITodosService {
   }
   async getTasksForDay(userId: string, day: string) {
     try {
-      return await this.dataBaseService.getDocument(userId, day);
+      const result = await this.dataBaseService.getDocument(userId, day);
+      if (!result) {
+        return [];
+      }
+      return Object.values(result);
     } catch (err) {
       toast.error("Sorry we have problem with server!");
     }

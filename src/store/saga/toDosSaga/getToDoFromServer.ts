@@ -14,9 +14,5 @@ export function* getToDosFromServer(action: IActionGetToDosSaga): unknown {
     return await todosService.getTasksForDay(userId, day);
   });
 
-  if (!getToDosList) {
-    return yield put(getTodo([]));
-  }
-
-  yield put(getTodo(Object.values(getToDosList)));
+  yield put(getTodo(getToDosList));
 }

@@ -8,22 +8,25 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
+interface IUser {
+  email: string | null;
+  id: string;
+}
+
 interface IAuthService {
-  registrationUser(
-    email: string,
-    password: string,
-  ): Promise<UserCredential | undefined>;
-  loginUser(
-    email: string,
-    password: string,
-  ): Promise<UserCredential | undefined>;
+  registrationUser(email: string, password: string): Promise<IUser | undefined>;
+  loginUser(email: string, password: string): Promise<IUser | undefined>;
 }
 
 class FirebaseAuthService implements IAuthService {
   async registrationUser(email: string, password: string) {
     try {
       const auth = getAuth();
-      return await createUserWithEmailAndPassword(auth, email, password);
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+      return {
+        email: user.user.email,
+        id: user.user.uid,
+      };
     } catch (err) {
       errorProcessingRegistration((err as Error).message);
     }
@@ -32,7 +35,11 @@ class FirebaseAuthService implements IAuthService {
   async loginUser(email: string, password: string) {
     try {
       const auth = getAuth();
-      return await signInWithEmailAndPassword(auth, email, password);
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      return {
+        email: user.user.email,
+        id: user.user.uid,
+      };
     } catch (err) {
       errorProcessingLogin((err as Error).message);
     }

@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import styles from "./themeProvider.module.scss";
 import classNames from "classnames";
 import {
@@ -11,7 +11,10 @@ export interface IThemeContext {
   changeTheme: () => void;
 }
 
-export const ThemeContext = createContext<null | IThemeContext>(null);
+export const ThemeContext = createContext<IThemeContext | null>(null);
+
+export const useThemeContext = () =>
+  useContext<IThemeContext | null>(ThemeContext);
 
 interface IPropsThemeProvider {
   children: React.ReactNode;
@@ -37,7 +40,7 @@ const ThemeProvider = ({ children }: IPropsThemeProvider) => {
     const attributeFromLocalStorage = localStorage.getItem(
       KEY_THEME_LOCALSTORAGE,
     );
-    1;
+
     if (!attributeFromLocalStorage) {
       return setTheme(LIGHT_THEME);
     }
