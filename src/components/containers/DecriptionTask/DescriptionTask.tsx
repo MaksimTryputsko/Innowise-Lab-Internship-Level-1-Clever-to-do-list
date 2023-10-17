@@ -7,7 +7,7 @@ interface IPropsDescriptionTask {
 }
 const DescriptionTask = ({ description, taskName }: IPropsDescriptionTask) => {
   return (
-    <div className={styles.descriptionBlock}>
+    <div>
       <h1>{taskName}</h1>
       <span className={styles.description}>{description}</span>
     </div>

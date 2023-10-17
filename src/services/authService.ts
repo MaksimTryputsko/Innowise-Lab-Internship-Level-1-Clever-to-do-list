@@ -1,32 +1,35 @@
 import { errorProcessingLogin } from "functions/errorProcessing/errorProcessingLogin";
-import {
-  FirebaseClient,
-  IFirebaseClient,
-} from "./servicesClient/firebaseClient";
 import { errorProcessingRegistration } from "functions/errorProcessing/errorProcessingRegistration";
 
-class AuthService {
-  httpClient: IFirebaseClient;
-  constructor(httpClient: IFirebaseClient) {
-    this.httpClient = httpClient;
-  }
-  async registrationUserWithEmailAndPassword(email: string, password: string) {
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+
+interface IAuthService {
+  registrationUser(email: string, password: string): Promise<unknown>;
+  loginUser(email: string, password: string): Promise<unknown>;
+}
+
+class AuthService implements IAuthService {
+  async registrationUser(email: string, password: string) {
     try {
-      const response = await this.httpClient.registrationUser(email, password);
-      return response;
+      const auth = getAuth();
+      return await createUserWithEmailAndPassword(auth, email, password);
     } catch (err) {
       errorProcessingRegistration((err as Error).message);
     }
   }
 
-  async loginWithEmailAndPassword(email: string, password: string) {
+  async loginUser(email: string, password: string) {
     try {
-      const response = await this.httpClient.loginUser(email, password);
-      return response;
+      const auth = getAuth();
+      return await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
       errorProcessingLogin((err as Error).message);
     }
   }
 }
 
-export const authService = new AuthService(FirebaseClient);
+export const authService = new AuthService();

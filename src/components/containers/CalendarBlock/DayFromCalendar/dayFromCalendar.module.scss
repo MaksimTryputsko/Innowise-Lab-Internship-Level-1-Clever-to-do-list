@@ -23,33 +23,34 @@
   }
 }
 
-.completedTasks {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  height: 10px;
-
-  span {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: $white;
-  }
-}
-.unfulfilledTasks {
+.completedTasksBlock {
   height: 10px;
   overflow-x: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
-  span {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: $black;
-  }
+}
+
+.completedStatus {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: $white;
+}
+.unfulfilledTasksBlock {
+  height: 10px;
+  overflow-x: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.unfulfilledStatus {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: $black;
 }
 .wrapperForDay:hover {
   cursor: pointer;
@@ -62,17 +63,4 @@
   gap: 10px;
   align-items: center;
   justify-content: center;
-}
-.completedTasksBlock {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background-color: $white;
-}
-
-.unfulfilled {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background-color: $black;
 }

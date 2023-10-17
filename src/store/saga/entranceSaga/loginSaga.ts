@@ -10,7 +10,7 @@ export interface IActionEntrySaga {
 export function* loginSaga(action: IActionEntrySaga): unknown {
   const { email, password } = action.payload;
   const userFromServer = yield call(async () => {
-    return authService.loginWithEmailAndPassword(email, password);
+    return authService.loginUser(email, password);
   });
   if (!userFromServer) {
     return;

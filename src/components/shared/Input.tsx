@@ -3,10 +3,10 @@ import InputMUI from "@mui/joy/Input";
 
 interface IPropsInput {
   placeholder: string;
-  task: string;
+  value: string;
   onChange: (text: string) => void;
 }
-const Input = ({ task, onChange, placeholder }: IPropsInput) => {
+const Input = ({ value, onChange, placeholder }: IPropsInput) => {
   const setText = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
   };
@@ -16,7 +16,7 @@ const Input = ({ task, onChange, placeholder }: IPropsInput) => {
       placeholder={placeholder}
       variant="outlined"
       color="neutral"
-      value={task}
+      value={value}
       onChange={setText}
     />
   );

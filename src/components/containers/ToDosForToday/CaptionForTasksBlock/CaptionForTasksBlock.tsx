@@ -1,10 +1,10 @@
 import React from "react";
 import styles from "./captionForTasksBlock.module.scss";
-import { IDays } from "functions/convertToDosListWithAllDays";
+import { IDay } from "functions/convertTodosListWithAllDays";
 
 interface IPropsCaptionForTasksBlock {
   email: string;
-  date: IDays;
+  date: IDay;
 }
 
 const CaptionForTasksBlock = ({ email, date }: IPropsCaptionForTasksBlock) => {

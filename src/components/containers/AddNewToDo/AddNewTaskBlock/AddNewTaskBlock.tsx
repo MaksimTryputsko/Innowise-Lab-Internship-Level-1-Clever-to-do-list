@@ -1,14 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import styles from "./addNewTaskBlock.module.scss";
 import { useAuth } from "hooks/useAuth";
 import { useDispatch } from "react-redux";
-import {
-  getToDosListSagaForMonths,
-  sagaSetToDo,
-} from "store/reducers/toDoListReducer/actions";
+import { sagaSetToDo } from "store/reducers/toDoListReducer/actions";
 import { Input } from "components/shared/Input";
 import { InputDate } from "components/shared/InputDate";
-import { arrayDaysFromToDay } from "functions/getDays";
+import { arrayDaysFromToday } from "functions/getDays";
 import { useParams } from "react-router-dom";
 import { useToDosList } from "hooks/useToDosList";
 import { shouldUpdateTask } from "functions/shouldUpdateTask";
@@ -28,15 +25,9 @@ const AddNewTaskBlock = ({ onClose }: IPropsAddNewTaskBlock) => {
   const dispatch = useDispatch();
   const { toDosForMonth } = useToDosList();
   const daysArray = useMemo(
-    () => arrayDaysFromToDay().map(el => `${el.number}`),
+    () => arrayDaysFromToday().map(el => `${el.number}`),
     [],
   );
-
-  useEffect(() => {
-    return () => {
-      dispatch(getToDosListSagaForMonths(id));
-    };
-  });
 
   const buttonText = useMemo(() => {
     if (shouldUpdateTask(toDosForMonth, date, task).update) {
@@ -88,12 +79,12 @@ const AddNewTaskBlock = ({ onClose }: IPropsAddNewTaskBlock) => {
           <div className={styles.taskBlock}>
             <Input
               placeholder={"Write yor task"}
-              task={task}
+              value={task}
               onChange={onChangeHandlerNameTask}
             />
             <Input
               placeholder={"Set description for your task"}
-              task={description}
+              value={description}
               onChange={onChangeHandlerDescriptionTask}
             />
           </div>

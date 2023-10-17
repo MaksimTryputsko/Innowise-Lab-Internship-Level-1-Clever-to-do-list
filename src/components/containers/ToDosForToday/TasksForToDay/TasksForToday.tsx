@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { ToDoElement } from "../ToDoElement/ToDoElement";
 import { ITask, sagaGetToDo } from "store/reducers/toDoListReducer/actions";
 import { useToDosList } from "hooks/useToDosList";
-import { arrayDaysFromToDay } from "functions/getDays";
+import { arrayDaysFromToday } from "functions/getDays";
 import { CaptionForTasksBlock } from "../CaptionForTasksBlock/CaptionForTasksBlock";
 
 const TasksForToday = () => {
@@ -15,7 +15,7 @@ const TasksForToday = () => {
   const dispatch = useDispatch();
   const { pageId } = useParams();
   const { toDos } = useToDosList();
-  const daysInMonth = arrayDaysFromToDay();
+  const daysInMonth = arrayDaysFromToday();
 
   const currentDate = useMemo(() => {
     if (pageId) {
@@ -45,7 +45,7 @@ const TasksForToday = () => {
   return (
     <div className={styles.blockTasksForToday}>
       {dateHeader}
-      {[...toDos].map((task: ITask) => {
+      {toDos.map((task: ITask) => {
         return (
           <ToDoElement
             task={task.task}

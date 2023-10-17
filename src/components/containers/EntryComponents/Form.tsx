@@ -1,5 +1,5 @@
 import { Button } from "components/shared/Button/Button";
-import { FormInput } from "components/shared/FormInput";
+import { Input } from "components/shared/Input";
 import React, { useState } from "react";
 
 interface IFormProps {
@@ -23,14 +23,8 @@ const Form = ({ title, handleClick }: IFormProps) => {
 
   return (
     <div>
-      <FormInput
-        type="email"
-        value={email}
-        placeholder="email"
-        onChange={onChangeEmail}
-      />
-      <FormInput
-        type="password"
+      <Input value={email} placeholder="email" onChange={onChangeEmail} />
+      <Input
         value={password}
         onChange={onChangePassword}
         placeholder="password"

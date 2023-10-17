@@ -1,6 +1,6 @@
 import { put, call } from "redux-saga/effects";
 import { ISagaGetTodo, getTodo } from "store/reducers/toDoListReducer/actions";
-import { toDosService } from "services/toDosSevice";
+import { toDosService } from "services/FirebaseTodosService";
 
 interface IActionGetToDosSaga {
   type: string;

@@ -6,21 +6,22 @@ import { Button } from "components/shared/Button/Button";
 
 const AddNewTaskButton = () => {
   const [isOpen, setOpen] = useState(false);
-
-  const handleClick = () => {
+  const handleButtonClick = () => {
     setOpen(true);
   };
-  const handleClickSetOpen = () => {
+
+  const handleClose = () => {
     setOpen(false);
   };
+
   return (
     <div className={styles.addNewTaskBlockButton}>
       <div className={styles.wrapperForButton}>
-        <Button variant="contained" onClick={handleClick}>
+        <Button variant="contained" onClick={handleButtonClick}>
           + Add a New Task
         </Button>
-        <Modal isOpen={isOpen} onClose={handleClickSetOpen}>
-          <AddNewTaskBlock onClose={handleClickSetOpen} />
+        <Modal isOpen={isOpen} onClose={handleClose}>
+          <AddNewTaskBlock onClose={handleClose} />
         </Modal>
       </div>
     </div>

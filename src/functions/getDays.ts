@@ -21,20 +21,20 @@ const getDaysArray = (year: number, month: number) => {
   let index = daysIndex[new Date(year, month - 1, 1).toString().split(" ")[0]];
 
   const daysArray = [...Array(numDaysInMonth[month - 1])]
-    .map((e, i) => i + 1)
-    .map((el, i) => {
+    .map((day, index) => index + 1)
+    .map((day, indexOfDays) => {
       if (index == 7) index = 0;
       return {
         year: year,
         month: month,
-        number: i + 1,
+        number: indexOfDays + 1,
         day: daysInWeek[index++],
       };
     });
   return daysArray;
 };
 
-const arrayDaysFromToDay = () => {
+const arrayDaysFromToday = () => {
   const date = new Date();
   const month = date.getMonth() + 1;
   const toDay = date.getDate();
@@ -43,4 +43,4 @@ const arrayDaysFromToDay = () => {
   const arrayDays = getDaysArray(year, month).filter(el => el.number >= toDay);
   return arrayDays;
 };
-export { arrayDaysFromToDay };
+export { arrayDaysFromToday };

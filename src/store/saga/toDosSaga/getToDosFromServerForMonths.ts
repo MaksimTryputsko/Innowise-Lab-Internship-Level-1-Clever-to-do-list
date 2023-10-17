@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { getToDosForMonths } from "store/reducers/toDoListReducer/actions";
-import { toDosService } from "services/toDosSevice";
+import { toDosService } from "services/FirebaseTodosService";
 
 interface IActionSagaForMonths {
   type: string;
@@ -13,10 +13,8 @@ export function* getToDosSagaFromServerMonths(
   const getToDosList = yield call(async () => {
     return toDosService.getDocuments(action.payload);
   });
-  
   if (!getToDosList) {
     return;
   }
-
   yield put(getToDosForMonths(getToDosList));
 }

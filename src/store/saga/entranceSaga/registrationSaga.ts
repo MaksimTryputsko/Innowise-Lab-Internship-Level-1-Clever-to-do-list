@@ -6,7 +6,7 @@ import { authService } from "services/authService";
 export function* registrationSaga(action: IActionEntrySaga): unknown {
   const { email, password } = action.payload;
   const userFromServer = yield call(async () => {
-    return authService.registrationUserWithEmailAndPassword(email, password);
+    return authService.registrationUser(email, password);
   });
   if (!userFromServer) {
     return;

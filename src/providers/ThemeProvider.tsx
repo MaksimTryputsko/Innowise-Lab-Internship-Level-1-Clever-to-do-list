@@ -1,11 +1,4 @@
-import React, {
-  Context,
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, useEffect, useState } from "react";
 import styles from "./themeProvider.module.scss";
 import classNames from "classnames";
 import {
@@ -14,9 +7,11 @@ import {
   LIGHT_THEME,
 } from "constants/valuesTheme";
 
-export const ThemeContext = createContext<
-  (string | Dispatch<SetStateAction<string>>)[] | null
->(null);
+export interface IThemeContext {
+  changeTheme: () => void;
+}
+
+export const ThemeContext = createContext<null | IThemeContext>(null);
 
 interface IPropsThemeProvider {
   children: React.ReactNode;
@@ -30,19 +25,27 @@ const ThemeProvider = ({ children }: IPropsThemeProvider) => {
     [styles.dark]: theme === DARK_THEME,
   });
 
+  const changeTheme = () => {
+    setTheme(theme === LIGHT_THEME ? DARK_THEME : LIGHT_THEME);
+    localStorage.setItem(
+      KEY_THEME_LOCALSTORAGE,
+      theme === LIGHT_THEME ? DARK_THEME : LIGHT_THEME,
+    );
+  };
+
   useEffect(() => {
     const attributeFromLocalStorage = localStorage.getItem(
       KEY_THEME_LOCALSTORAGE,
     );
+    1;
     if (!attributeFromLocalStorage) {
-      setTheme(LIGHT_THEME);
-    } else {
-      setTheme(attributeFromLocalStorage);
+      return setTheme(LIGHT_THEME);
     }
+    return setTheme(attributeFromLocalStorage);
   }, []);
 
   return (
-    <ThemeContext.Provider value={[theme, setTheme]}>
+    <ThemeContext.Provider value={{ changeTheme }}>
       <div className={classes}>{children}</div>
     </ThemeContext.Provider>
   );

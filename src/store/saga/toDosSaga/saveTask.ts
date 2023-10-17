@@ -2,10 +2,11 @@ import { put } from "redux-saga/effects";
 
 import {
   ISagaSetTodo,
+  getToDosListSagaForMonths,
   setTodo,
   updateToDoDescription,
 } from "store/reducers/toDoListReducer/actions";
-import { toDosService } from "services/toDosSevice";
+import { toDosService } from "services/FirebaseTodosService";
 
 interface IActionSaveTask {
   type: string;
@@ -17,7 +18,8 @@ export function* saveTask(action: IActionSaveTask): unknown {
   const { findId, update } = shouldUpdate;
 
   const id = update ? findId : taskForServer.id;
-  toDosService.saveDocument(date, userId, `${id}`, taskForServer);
+  yield toDosService.saveTask(date, userId, `${id}`, taskForServer);
+  yield put(getToDosListSagaForMonths(userId));
 
   if (pageId === date) {
     return yield put(

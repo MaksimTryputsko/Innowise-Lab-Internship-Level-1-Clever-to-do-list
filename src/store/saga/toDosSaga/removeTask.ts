@@ -3,7 +3,7 @@ import {
   removeToDo,
 } from "store/reducers/toDoListReducer/actions";
 import { put } from "redux-saga/effects";
-import { toDosService } from "services/toDosSevice";
+import { toDosService } from "services/FirebaseTodosService";
 
 interface IActionRemoveSaga {
   type: string;
@@ -13,6 +13,6 @@ interface IActionRemoveSaga {
 export function* removeTask(action: IActionRemoveSaga): unknown {
   const { userId, numberDay, id } = action.payload;
 
-  yield toDosService.removeDocument(userId, numberDay, id);
+  yield toDosService.removeTask(userId, numberDay, id);
   yield put(removeToDo({ id }));
 }

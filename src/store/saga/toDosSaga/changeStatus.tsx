@@ -2,7 +2,7 @@ import {
   IPayloadChangeCompleted,
   getToDosListSagaForMonths,
 } from "store/reducers/toDoListReducer/actions";
-import { toDosService } from "services/toDosSevice";
+import { toDosService } from "services/FirebaseTodosService";
 import { put } from "redux-saga/effects";
 
 interface IActionChangeStatus {
