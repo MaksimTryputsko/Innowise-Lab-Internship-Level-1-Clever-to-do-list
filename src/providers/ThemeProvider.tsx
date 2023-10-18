@@ -11,7 +11,7 @@ export interface IThemeContext {
   changeTheme: () => void;
 }
 
-export const ThemeContext = createContext<IThemeContext | null>(null);
+const ThemeContext = createContext<IThemeContext | null>(null);
 
 export const useThemeContext = () =>
   useContext<IThemeContext | null>(ThemeContext);

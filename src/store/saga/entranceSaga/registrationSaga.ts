@@ -11,6 +11,5 @@ export function* registrationSaga(action: IActionEntrySaga): unknown {
   if (!userFromServer) {
     return;
   }
-
   yield put(setUser(userFromServer));
 }
