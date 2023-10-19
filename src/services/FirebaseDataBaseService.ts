@@ -12,22 +12,32 @@ import {
 import { dataBase } from "../firebase";
 import { ITask } from "store/reducers/toDoListReducer/actions";
 
-export interface IDataBaseService<T, X> {
-  getDocuments(collectionId: string): X;
-  getDocument(collectionId: string, documentId: string): X;
+export interface IDataBaseService<DOCUMENT, RESULT> {
+  getDocuments(collectionId: string): Promise<{ id: string }[] | undefined>;
+  getDocument(collectionId: string, documentId: string): RESULT;
   removeDocument(
     collectionId: string,
     documentId: string,
     idFieldFromDocument: string,
   ): void;
-  updateDocument(collectionId: string, documentId: string, document: T): void;
-  saveDocument(documentId: string, collectionId: string, document: T): void;
+  updateDocument(
+    collectionId: string,
+    documentId: string,
+    document: DOCUMENT,
+  ): void;
+  saveDocument(
+    documentId: string,
+    collectionId: string,
+    document: DOCUMENT,
+  ): void;
 }
 
-export default class FirebaseDataBaseService
-  implements
-    IDataBaseService<Record<string, ITask>, Promise<DocumentData | undefined>>
-{
+export type DataBaseFirebase = IDataBaseService<
+  Record<string, ITask>,
+  Promise<DocumentData | undefined>
+>;
+
+export default class FirebaseDataBaseService implements DataBaseFirebase {
   async getDocuments(collectionId: string) {
     const collectionRef = collection(dataBase, collectionId);
     const data = await getDocs(collectionRef);

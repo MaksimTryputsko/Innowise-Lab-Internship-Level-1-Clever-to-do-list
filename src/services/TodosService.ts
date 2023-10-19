@@ -2,6 +2,7 @@ import { ITask } from "store/reducers/toDoListReducer/actions";
 import toast from "react-hot-toast";
 
 import FirebaseDataBaseService, {
+  DataBaseFirebase,
   IDataBaseService,
 } from "./FirebaseDataBaseService";
 
@@ -24,8 +25,8 @@ interface ITodosService {
 }
 
 class TodosService implements ITodosService {
-  dataBaseService: IDataBaseService;
-  constructor(dataBaseService: IDataBaseService) {
+  dataBaseService: DataBaseFirebase;
+  constructor(dataBaseService: DataBaseFirebase) {
     this.dataBaseService = dataBaseService;
   }
   async getTasksForMonths(userId: string) {
