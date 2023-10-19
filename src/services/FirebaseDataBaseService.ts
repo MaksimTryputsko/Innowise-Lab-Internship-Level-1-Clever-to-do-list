@@ -1,5 +1,6 @@
 import {
   DocumentData,
+  PartialWithFieldValue,
   collection,
   deleteField,
   doc,
@@ -10,34 +11,31 @@ import {
 } from "firebase/firestore";
 
 import { dataBase } from "../firebase";
-import { ITask } from "store/reducers/toDoListReducer/actions";
 
-export interface IDataBaseService<DOCUMENT, RESULT> {
+export interface IDataBaseService {
   getDocuments(collectionId: string): Promise<{ id: string }[] | undefined>;
-  getDocument(collectionId: string, documentId: string): RESULT;
+  getDocument<RESULT>(
+    collectionId: string,
+    documentId: string,
+  ): Promise<RESULT | undefined>;
   removeDocument(
     collectionId: string,
     documentId: string,
     idFieldFromDocument: string,
   ): void;
-  updateDocument(
+  updateDocument<DOCUMENT_UPDATE>(
     collectionId: string,
     documentId: string,
-    document: DOCUMENT,
+    document: { [x: string]: DOCUMENT_UPDATE },
   ): void;
-  saveDocument(
+  saveDocument<DOCUMENT_SAVE>(
     documentId: string,
     collectionId: string,
-    document: DOCUMENT,
+    document: { [x: string]: DOCUMENT_SAVE },
   ): void;
 }
 
-export type DataBaseFirebase = IDataBaseService<
-  Record<string, ITask>,
-  Promise<DocumentData | undefined>
->;
-
-export default class FirebaseDataBaseService implements DataBaseFirebase {
+export default class FirebaseDataBaseService implements IDataBaseService {
   async getDocuments(collectionId: string) {
     const collectionRef = collection(dataBase, collectionId);
     const data = await getDocs(collectionRef);
@@ -46,11 +44,11 @@ export default class FirebaseDataBaseService implements DataBaseFirebase {
       id: doc.id,
     }));
   }
-  async getDocument(collectionId: string, documentId: string) {
+  async getDocument<RESULT>(collectionId: string, documentId: string) {
     const collectionRef = doc(dataBase, collectionId, documentId);
     const data = await getDoc(collectionRef);
     const result = data.data();
-    return result;
+    return result as RESULT;
   }
   async removeDocument(
     collectionId: string,
@@ -62,19 +60,19 @@ export default class FirebaseDataBaseService implements DataBaseFirebase {
       [idFieldFromDocument]: deleteField(),
     });
   }
-  async updateDocument(
+  async updateDocument<DOCUMENT_UPDATE>(
     collectionId: string,
     documentId: string,
-    document: Record<string, ITask>,
+    document: { [x: string]: DOCUMENT_UPDATE },
   ) {
     await setDoc(doc(dataBase, `${collectionId}`, documentId), document, {
       merge: true,
     });
   }
-  async saveDocument(
+  async saveDocument<DOCUMENT_SAVE>(
     documentId: string,
     collectionId: string,
-    document: Record<string, ITask>,
+    document: { [x: string]: DOCUMENT_SAVE },
   ) {
     await setDoc(doc(dataBase, `${collectionId}`, documentId), document, {
       merge: true,

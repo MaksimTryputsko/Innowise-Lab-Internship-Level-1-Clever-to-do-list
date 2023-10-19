@@ -2,7 +2,6 @@ import { ITask } from "store/reducers/toDoListReducer/actions";
 import toast from "react-hot-toast";
 
 import FirebaseDataBaseService, {
-  DataBaseFirebase,
   IDataBaseService,
 } from "./FirebaseDataBaseService";
 
@@ -25,8 +24,8 @@ interface ITodosService {
 }
 
 class TodosService implements ITodosService {
-  dataBaseService: DataBaseFirebase;
-  constructor(dataBaseService: DataBaseFirebase) {
+  dataBaseService: IDataBaseService;
+  constructor(dataBaseService: IDataBaseService) {
     this.dataBaseService = dataBaseService;
   }
   async getTasksForMonths(userId: string) {
@@ -38,7 +37,10 @@ class TodosService implements ITodosService {
   }
   async getTasksForDay(userId: string, day: string) {
     try {
-      const result = await this.dataBaseService.getDocument(userId, day);
+      const result = await this.dataBaseService.getDocument<ITask[]>(
+        userId,
+        day,
+      );
       if (!result) {
         return [];
       }
@@ -64,7 +66,7 @@ class TodosService implements ITodosService {
       const document = {
         [taskId]: task,
       };
-      await this.dataBaseService.updateDocument(id, pageId, document);
+      await this.dataBaseService.updateDocument<ITask>(id, pageId, document);
     } catch (err) {
       toast.error("Sorry we have problem with server!");
     }
@@ -79,7 +81,7 @@ class TodosService implements ITodosService {
       const document = {
         [`${id}`]: taskForServer,
       };
-      await this.dataBaseService.saveDocument(date, userId, document);
+      await this.dataBaseService.saveDocument<ITask>(date, userId, document);
     } catch (err) {
       toast.error("Sorry we have problem with server!");
     }
