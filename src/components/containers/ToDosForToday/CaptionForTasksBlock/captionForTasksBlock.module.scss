@@ -1,0 +1,33 @@
+@import "/src/constants/variables.scss";
+
+.blockTasksForTodayName {
+  display: flex;
+  font-size: 2.5rem;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.emailInformation {
+  font-size: 2.8rem;
+  font-weight: bold;
+}
+
+.blockTasksForToday:hover {
+  border-top: 2px solid $black;
+}
+
+.dateBlock {
+  display: flex;
+  gap: 10px;
+
+  span {
+    font-size: 2.8rem;
+    font-weight: bold;
+  }
+}
+
+@media (max-width: 1041px) {
+  .blockTasksForTodayName {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,41 @@
+@import "/src/constants/variables.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+h1 {
+  color: #3e3e3e;
+}
+body {
+  position: relative;
+  font-family: "Caveat", cursive;
+}
+button {
+  font-family: "Caveat", cursive;
+}
+
+input {
+  font-family: "Roboto", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 24px;
+  height: 8px;
+  background-color: #016a70;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 9em;
+  box-shadow: inset 1px 1px 10px #f3faf7;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #253861;
+}

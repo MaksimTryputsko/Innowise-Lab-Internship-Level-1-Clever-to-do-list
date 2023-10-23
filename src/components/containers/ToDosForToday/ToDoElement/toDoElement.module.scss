@@ -1,0 +1,35 @@
+@import "/src/constants/variables.scss";
+
+.todoElementWrapper {
+  display: flex;
+  align-items: center;
+
+  span {
+    padding-top: 1px;
+    font-size: 30px;
+  }
+}
+
+.toDoElement {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 5px 20px 5px 5px;
+}
+
+.toDoElement:hover {
+  opacity: 0.5;
+}
+
+.descriptionBlock {
+  display: flex;
+  align-items: flex-end;
+  span {
+    font-size: 35px;
+  }
+  span:hover {
+    cursor: pointer;
+    color: $hoverDelete;
+  }
+}
