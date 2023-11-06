@@ -1,20 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
 import styles from "./header.module.scss";
 import { useAuth } from "hooks/useAuth";
-import { removeUser } from "store/reducers/userReducer/actions";
-import { useDispatch } from "react-redux";
-
-import { IThemeContext, ThemeContext } from "providers/ThemeProvider";
+import { IThemeContext, useThemeContext } from "providers/ThemeProvider";
 import { Button } from "components/shared/Button/Button";
+import { useAuthUser } from "store/authStore";
 
 const Header = () => {
-  const dispatch = useDispatch();
+  const { logOut } = useAuthUser();
   const { email } = useAuth();
 
   const handleClickRemoveUser = () => {
-    dispatch(removeUser());
+    logOut();
   };
-  const { changeTheme } = useContext(ThemeContext) as IThemeContext;
+  const { changeTheme } = useThemeContext() as IThemeContext;
 
   return (
     <div className={styles.header}>

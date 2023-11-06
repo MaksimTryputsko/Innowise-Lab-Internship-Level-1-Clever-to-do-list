@@ -1,4 +1,4 @@
-import { ITask } from "store/reducers/toDoListReducer/actions";
+import { ITask } from "constants/interfaces";
 import toast from "react-hot-toast";
 
 import FirebaseDataBaseService, {
@@ -30,7 +30,9 @@ class TodosService implements ITodosService {
   }
   async getTasksForMonths(userId: string) {
     try {
-      return await this.dataBaseService.getDocuments(userId);
+      const result = await this.dataBaseService.getDocuments(userId);
+      const todosList = result?.map((day: any) => Object.values(day));
+      return todosList.flat(1);
     } catch (err) {
       toast.error("Sorry we have problem with server!");
     }

@@ -1,18 +1,20 @@
 import React from "react";
 import styles from "./dayFromCalendar.module.scss";
-import { ITask } from "store/reducers/toDoListReducer/actions";
+import { ITask } from "constants/interfaces";
 
 interface IPropsDayFromCalendar {
   dayNumber: number;
   dayName: string;
-  taskStatuses?: ITask[];
+  todos: ITask[];
 }
 
 const DayFromCalendar = ({
   dayNumber,
   dayName,
-  taskStatuses,
+  todos,
 }: IPropsDayFromCalendar) => {
+  const taskStatuses = todos.filter(day => day.date === dayNumber.toString());
+
   return (
     <div className={styles.blockDayCalendar}>
       <div className={styles.completedTasksBlock}>

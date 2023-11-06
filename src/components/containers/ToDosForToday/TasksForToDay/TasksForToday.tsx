@@ -1,21 +1,19 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import styles from "./tasksForToDay.module.scss";
 import { AddNewTaskButton } from "components/containers/AddNewToDo/AddNewTask/AddNewTaskButton";
 import { useAuth } from "hooks/useAuth";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { ToDoElement } from "../ToDoElement/ToDoElement";
-import { ITask, sagaGetToDo } from "store/reducers/toDoListReducer/actions";
-import { useToDosList } from "hooks/useToDosList";
+import { ITask } from "constants/interfaces";
 import { arrayDaysFromToday } from "functions/getDays";
 import { CaptionForTasksBlock } from "../CaptionForTasksBlock/CaptionForTasksBlock";
+import { useTodos } from "store/todosStore";
 
 const TasksForToday = () => {
-  const { email, id } = useAuth();
-  const dispatch = useDispatch();
+  const { email } = useAuth();
   const { pageId } = useParams();
-  const { toDos } = useToDosList();
   const daysInMonth = arrayDaysFromToday();
+  const { todos } = useTodos();
 
   const currentDate = useMemo(() => {
     if (pageId) {
@@ -35,17 +33,14 @@ const TasksForToday = () => {
     return null;
   }, [pageId]);
 
-  useEffect(() => {
-    if (!pageId) {
-      return;
-    }
-    dispatch(sagaGetToDo({ userId: `${id}`, day: pageId }));
-  }, [pageId]);
+  const todosList = useMemo(() => {
+    return todos.filter(todo => todo.date === pageId);
+  }, [pageId, todos]);
 
   return (
     <div className={styles.blockTasksForToday}>
       {dateHeader}
-      {toDos.map((task: ITask) => {
+      {todosList.map((task: ITask) => {
         return (
           <ToDoElement
             task={task.task}

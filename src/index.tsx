@@ -5,7 +5,6 @@ import { App } from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "providers/ThemeProvider";
 import { Provider } from "react-redux";
-import { store } from "store";
 import "./firebase";
 import "firebase/firestore";
 import "firebase/auth";
@@ -18,18 +17,16 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <ThemeProvider>
-      <Provider store={store}>
-        <App />
-        <Toaster
-          position="top-center"
-          toastOptions={{
-            style: {
-              border: "5px solid #713200",
-              fontSize: "25px",
-            },
-          }}
-        />
-      </Provider>
+      <App />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            border: "5px solid #713200",
+            fontSize: "25px",
+          },
+        }}
+      />
     </ThemeProvider>
   </BrowserRouter>,
 );

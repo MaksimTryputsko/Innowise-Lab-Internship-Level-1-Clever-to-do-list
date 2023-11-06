@@ -4,16 +4,10 @@ import { CheckBox } from "components/shared/CheckBox/CheckBox";
 import { useParams } from "react-router-dom";
 import { Modal } from "components/shared/ModalAddNewTask/Modal";
 import { DescriptionTask } from "components/containers/DecriptionTask/DescriptionTask";
-
 import { useAuth } from "hooks/useAuth";
-import { useDispatch } from "react-redux";
-import {
-  getToDosListSagaForMonths,
-  removeSagaToDos,
-  sagaChangeCompleted,
-} from "store/reducers/toDoListReducer/actions";
 import { DeleteIcon } from "components/shared/DeleteIcon";
 import { Button } from "components/shared/Button/Button";
+import { useTodos } from "store/todosStore";
 
 interface IPropsToDoElement {
   task: string;
@@ -32,14 +26,13 @@ const ToDoElement = ({
   const [isOpen, setOpen] = useState(false);
   const { id } = useAuth();
   const { pageId } = useParams();
+  const { removeTodo, changeStatus } = useTodos();
 
-  const dispatch = useDispatch();
   const handleRemoveClick = () => {
     if (!pageId || !id) {
       return;
     }
-    dispatch(removeSagaToDos({ userId: id, id: taskId, numberDay: pageId }));
-    dispatch(getToDosListSagaForMonths(id));
+    removeTodo(id, taskId, pageId);
   };
 
   const handleClickChangeCompleted = () => {
@@ -54,12 +47,14 @@ const ToDoElement = ({
       id: taskId,
       date: pageId,
     };
-    dispatch(sagaChangeCompleted({ id, pageId, taskId, task: toDo }));
+    changeStatus(id, pageId, taskId, toDo);
     setChecked(!isChecked);
   };
+
   const openModal = () => {
     setOpen(true);
   };
+
   const closeModal = () => {
     setOpen(false);
   };

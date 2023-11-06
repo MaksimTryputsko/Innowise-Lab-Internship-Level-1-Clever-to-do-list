@@ -1,6 +1,12 @@
 import React from "react";
 import styles from "./captionForTasksBlock.module.scss";
-import { IDay } from "functions/convertTodosListWithAllDays";
+
+interface IDay {
+  year: number;
+  month: number;
+  number: number;
+  day: string;
+}
 
 interface IPropsCaptionForTasksBlock {
   email: string;

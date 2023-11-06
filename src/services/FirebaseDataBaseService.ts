@@ -13,7 +13,7 @@ import {
 import { dataBase } from "../firebase";
 
 export interface IDataBaseService {
-  getDocuments(collectionId: string): Promise<{ id: string }[] | undefined>;
+  getDocuments(collectionId: string): Promise<any | undefined>;
   getDocument<RESULT>(
     collectionId: string,
     documentId: string,
@@ -41,7 +41,6 @@ export default class FirebaseDataBaseService implements IDataBaseService {
     const data = await getDocs(collectionRef);
     return data.docs.map(doc => ({
       ...doc.data(),
-      id: doc.id,
     }));
   }
   async getDocument<RESULT>(collectionId: string, documentId: string) {

@@ -1,16 +1,14 @@
 import React, { useMemo, useState } from "react";
 import styles from "./addNewTaskBlock.module.scss";
 import { useAuth } from "hooks/useAuth";
-import { useDispatch } from "react-redux";
-import { sagaSetToDo } from "store/reducers/toDoListReducer/actions";
 import { Input } from "components/shared/Input";
 import { InputDate } from "components/shared/InputDate";
 import { arrayDaysFromToday } from "functions/getDays";
 import { useParams } from "react-router-dom";
-import { useToDosList } from "hooks/useToDosList";
 import { shouldUpdateTask } from "functions/shouldUpdateTask";
 import { nanoid } from "nanoid/non-secure";
 import { Button } from "components/shared/Button/Button";
+import { useTodos } from "store/todosStore";
 
 interface IPropsAddNewTaskBlock {
   onClose: () => void;
@@ -20,17 +18,18 @@ const AddNewTaskBlock = ({ onClose }: IPropsAddNewTaskBlock) => {
   const [task, setTask] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
+
   const { pageId } = useParams();
   const { id } = useAuth();
-  const dispatch = useDispatch();
-  const { toDosForMonth } = useToDosList();
+  const { addTodo, todos } = useTodos();
+
   const daysArray = useMemo(
     () => arrayDaysFromToday().map(el => `${el.number}`),
     [],
   );
 
   const buttonText = useMemo(() => {
-    if (shouldUpdateTask(toDosForMonth, date, task).update) {
+    if (shouldUpdateTask(todos, date, task).update) {
       return "UPDATE TASK";
     }
     return "SAVE TASK";
@@ -40,8 +39,10 @@ const AddNewTaskBlock = ({ onClose }: IPropsAddNewTaskBlock) => {
     if (!pageId || !id) {
       return;
     }
-    const shouldUpdate = shouldUpdateTask(toDosForMonth, date, task);
+
+    const shouldUpdate = shouldUpdateTask(todos, date, task);
     const generateId = nanoid(10);
+
     const taskForServer = {
       task,
       description,
@@ -49,15 +50,8 @@ const AddNewTaskBlock = ({ onClose }: IPropsAddNewTaskBlock) => {
       id: generateId,
       date,
     };
-    dispatch(
-      sagaSetToDo({
-        userId: `${id}`,
-        taskForServer,
-        date,
-        pageId,
-        shouldUpdate,
-      }),
-    );
+
+    addTodo(`${id}`, date, taskForServer, pageId, shouldUpdate);
     onClose();
   };
 
@@ -68,9 +62,11 @@ const AddNewTaskBlock = ({ onClose }: IPropsAddNewTaskBlock) => {
   const onChangeHandlerDescriptionTask = (text: string) => {
     setDescription(text);
   };
+
   const onChangeSetDateTask = (date: string) => {
     setDate(date);
   };
+
   return (
     <div>
       <div className={styles.newTaskBlock}>

@@ -1,20 +1,19 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { sagaRegistrationUser } from "store/reducers/userReducer/actions";
 import { Form } from "./Form";
 import { useAuth } from "hooks/useAuth";
 import { getTodayDay } from "functions/getTodayDay";
 import { HOME_PAGE } from "constants/routes";
+import { useAuthUser } from "store/authStore";
 
 const SignUp: React.FC = React.memo(() => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isAuth } = useAuth();
   const today = getTodayDay();
+  const { registerUser } = useAuthUser();
 
   const handleRegister = (email: string, password: string) => {
-    dispatch(sagaRegistrationUser({ email: email, password: password }));
+    registerUser(email, password);
   };
 
   if (isAuth) {
